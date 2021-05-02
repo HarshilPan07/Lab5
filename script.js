@@ -28,13 +28,26 @@ selectImage.addEventListener('change', (event) => {
   selectImage.alt = event.target.files[0].name;
 });
 
-const generate = document.getElementById('submit');
+// const generate_form = document.getElementById('generate-meme');
 
-generate.addEventListener('submit', () => {
-  //  Disable generate, enable clear, read text, and voice option select
+// generate_form.addEventListener('submit', () => {
+//   var canvas = document.getElementById('user-image');
+//   var ctx = canvas.getContext('2d');
   
+//   ctx.fillText(document.getElementById('text-top'), 0, 0);
+//   ctx.fillText(document.getElementById('text-bottom'), 0, 0);
+
+//   //  Disable generate, enable clear, read text, and voice option select
+//   var button_group = getElementById('button-group');
+//   var clear_button = button_group[0],
+//       read_text_button = button_group[1];
+//   console.log(button_group);
+
+//   clear_button.disabled = false;
+//   read_text_button.disabled = false;
+
   
-});
+// });
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
