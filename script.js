@@ -6,13 +6,15 @@ const generate_form = document.getElementById('generate-meme');
 const btn_group = document.getElementById('button-group').querySelectorAll('button');
 const clear_btn = btn_group[0];
 const read_btn = btn_group[1];
+const slider = document.getElementById('volume-group').querySelector('input');
 
 var canvas = document.getElementById('user-image');
 var ctx = canvas.getContext('2d');
 
 var synth = window.speechSynthesis;
 var dropdown = document.getElementById('voice-selection');
-var voices = []
+var voices = [];
+var utterance_volume = 1.0;
 
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
@@ -73,10 +75,30 @@ read_btn.addEventListener('click', (event) => {
     }
   }
   
+  utterThis.volume = utterance_volume;
   synth.speak(utterThis);
 });
 
+slider.addEventListener('input', (event) => {
+  var slider_volume = slider.valueAsNumber; 
+  var volume_icon = document.getElementById('volume-group').querySelector('img');
+  utterance_volume = slider_volume/100;
 
+  if(slider_volume == 0) {
+    volume_icon.src = 'icons/volume-level-0.svg';
+  }
+  else if(slider_volume > 0 && slider_volume <= 33) {
+    volume_icon.src = 'icons/volume-level-1.svg';
+  }
+  else if(slider_volume > 33 && slider_volume <= 66) {
+    volume_icon.src = 'icons/volume-level-2.svg';
+  }
+  else {
+    volume_icon.src = 'icons/volume-level-3.svg';
+  }
+  console.log('inside volume');
+  
+});
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
