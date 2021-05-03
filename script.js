@@ -14,6 +14,7 @@ img.addEventListener('load', () => {
   var dimensions = getDimmensions(canvas.width, canvas.height, img.width, img.height);
   ctx.drawImage(img, dimensions['startX'], dimensions['startY'], dimensions['width'], dimensions['height']);
   
+  //  Generate to ON, others are OFF
   toggle_buttons(false);
   // Some helpful tips:
   // - Fill the whole Canvas with black first to add borders on non-square images, then draw on top
@@ -22,14 +23,12 @@ img.addEventListener('load', () => {
 });
 
 const selectImage = document.getElementById('image-input');
-
 selectImage.addEventListener('change', (event) => {
   img.src = URL.createObjectURL(event.target.files[0]);
   selectImage.alt = event.target.files[0].name;
 });
 
 const generate_form = document.getElementById('generate-meme');
-
 generate_form.addEventListener('submit', (event) => {
   ctx.font = "40px serif";
   ctx.fillStyle = 'white';
@@ -42,11 +41,26 @@ generate_form.addEventListener('submit', (event) => {
   ctx.fillText(top_text, canvas.width/2, 40);
   ctx.fillText(bottom_text, canvas.width/2, 370);
   
-  toggle_buttons(true);
   //  Disable generate, enable clear, read text, and voice option select
-  
+  toggle_buttons(true);
+
   event.preventDefault();
 });
+
+const btn_group = document.getElementById('button-group').querySelectorAll('button');
+const clear_btn = btn_group[0];
+const read_btn = btn_group[1];
+
+clear_btn.addEventListener('click', () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  toggle_buttons(false);
+});
+
+read_btn.addEventListener('click', () => {
+
+});
+
+
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
