@@ -1,20 +1,18 @@
 // script.js
 
 const img = new Image(); // used to load image from <input> and draw to canvas
+console.log('running here');
+var canvas = document.getElementById('user-image');
+var ctx = canvas.getContext('2d');
 
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
-  // TODO
-  var canvas = document.getElementById('user-image');
-  var ctx = canvas.getContext('2d');
-  
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   var dimensions = getDimmensions(canvas.width, canvas.height, img.width, img.height);
   ctx.drawImage(img, dimensions['startX'], dimensions['startY'], dimensions['width'], dimensions['height']);
-  
-
   // Some helpful tips:
   // - Fill the whole Canvas with black first to add borders on non-square images, then draw on top
   // - Clear the form when a new image is selected
@@ -28,26 +26,25 @@ selectImage.addEventListener('change', (event) => {
   selectImage.alt = event.target.files[0].name;
 });
 
-// const generate_form = document.getElementById('generate-meme');
+const generate_form = document.getElementById('generate-meme');
 
-// generate_form.addEventListener('submit', () => {
-//   var canvas = document.getElementById('user-image');
-//   var ctx = canvas.getContext('2d');
+generate_form.addEventListener('submit', (event) => {
+  ctx.font = "40px serif";
+  ctx.fillStyle = 'white';
+  ctx.textAlign = 'center';
+  var top_text = document.getElementById('text-top').value;
+  var bottom_text = document.getElementById('text-bottom').value;
+  console.log(top_text);
+  console.log(bottom_text);
+
+  ctx.fillText(top_text, canvas.width/2, 40);
+  ctx.fillText(bottom_text, canvas.width/2, 370);
   
-//   ctx.fillText(document.getElementById('text-top'), 0, 0);
-//   ctx.fillText(document.getElementById('text-bottom'), 0, 0);
-
-//   //  Disable generate, enable clear, read text, and voice option select
-//   var button_group = getElementById('button-group');
-//   var clear_button = button_group[0],
-//       read_text_button = button_group[1];
-//   console.log(button_group);
-
-//   clear_button.disabled = false;
-//   read_text_button.disabled = false;
-
+  //  Disable generate, enable clear, read text, and voice option select
   
-// });
+
+  event.preventDefault();
+});
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
