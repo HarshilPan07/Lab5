@@ -1,9 +1,13 @@
 // script.js
 
 const img = new Image(); // used to load image from <input> and draw to canvas
-console.log('running here');
+
 var canvas = document.getElementById('user-image');
 var ctx = canvas.getContext('2d');
+
+var synth = window.speechSynthesis;
+var dropdown = document.getElementById('voice-selection');
+var voices = []
 
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
@@ -56,10 +60,22 @@ clear_btn.addEventListener('click', () => {
   toggle_buttons(false);
 });
 
-read_btn.addEventListener('click', () => {
+read_btn.addEventListener('click', (event) => {
+  event.preventDefault();
 
+  var input_text = document.getElementById('text-top').value + 
+                    document.getElementById('text-bottom').value;
+  var utterThis = new SpeechSynthesisUtterance(input_text);
+  var selectedOption = dropdown.selectedOptions[0].getAttribute('data-name');
+  
+  for(var i = 0; i < voices.length ; i++) {
+    if(voices[i].name === selectedOption) {
+      utterThis.voice = voices[i];
+    }
+  }
+  
+  synth.speak(utterThis);
 });
-
 
 
 /**
@@ -111,11 +127,32 @@ function toggle_buttons(toggle) {
     generate_btn.disabled = true;
     btn_list[0].disabled = false;
     btn_list[1].disabled = false;
+    dropdown.disabled = false;
+    init_selection_dropdown();
   }
   else
   {
     generate_btn.disabled = false;
     btn_list[0].disabled = true;
     btn_list[1].disabled = true;
+    dropdown.disabled = true;
+  }
+}
+
+function init_selection_dropdown() {
+  voices = synth.getVoices();
+  
+  for(let i = 0; i < voices.length; i++)
+  {
+    var option = document.createElement('option');
+    option.textContent = voices[i].name +  ' (' + voices[i].lang + ')';
+    
+    if(voices[i].default) {
+      option.textContent += ' -- DEFAULT';
+    }
+
+    option.setAttribute('data-lang', voices[i].lang);
+    option.setAttribute('data-name', voices[i].name);
+    dropdown.appendChild(option);
   }
 }
