@@ -13,6 +13,8 @@ img.addEventListener('load', () => {
 
   var dimensions = getDimmensions(canvas.width, canvas.height, img.width, img.height);
   ctx.drawImage(img, dimensions['startX'], dimensions['startY'], dimensions['width'], dimensions['height']);
+  
+  toggle_buttons(false);
   // Some helpful tips:
   // - Fill the whole Canvas with black first to add borders on non-square images, then draw on top
   // - Clear the form when a new image is selected
@@ -40,9 +42,9 @@ generate_form.addEventListener('submit', (event) => {
   ctx.fillText(top_text, canvas.width/2, 40);
   ctx.fillText(bottom_text, canvas.width/2, 370);
   
+  toggle_buttons(true);
   //  Disable generate, enable clear, read text, and voice option select
   
-
   event.preventDefault();
 });
 
@@ -84,4 +86,22 @@ function getDimmensions(canvasWidth, canvasHeight, imageWidth, imageHeight) {
   }
 
   return { 'width': width, 'height': height, 'startX': startX, 'startY': startY }
+}
+
+function toggle_buttons(toggle) {
+  var generate_btn = document.getElementById('generate-meme').querySelector('button');
+  var btn_list = document.getElementById('button-group').querySelectorAll('button');
+  
+  if(toggle)
+  {
+    generate_btn.disabled = true;
+    btn_list[0].disabled = false;
+    btn_list[1].disabled = false;
+  }
+  else
+  {
+    generate_btn.disabled = false;
+    btn_list[0].disabled = true;
+    btn_list[1].disabled = true;
+  }
 }
