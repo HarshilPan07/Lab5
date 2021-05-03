@@ -9,4 +9,4 @@ https://harshilpan07.github.io/Lab5/
 
 ## Part 2:
 
-LINK TO YOUR PART 2 REPOSITORY
+https://github.com/HarshilPan07/github-actions-for-ci
