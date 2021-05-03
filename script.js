@@ -1,6 +1,11 @@
 // script.js
 
 const img = new Image(); // used to load image from <input> and draw to canvas
+const selectImage = document.getElementById('image-input');
+const generate_form = document.getElementById('generate-meme');
+const btn_group = document.getElementById('button-group').querySelectorAll('button');
+const clear_btn = btn_group[0];
+const read_btn = btn_group[1];
 
 var canvas = document.getElementById('user-image');
 var ctx = canvas.getContext('2d');
@@ -26,13 +31,11 @@ img.addEventListener('load', () => {
   // - If you draw the image to canvas here, it will update as soon as a new image is selected
 });
 
-const selectImage = document.getElementById('image-input');
 selectImage.addEventListener('change', (event) => {
   img.src = URL.createObjectURL(event.target.files[0]);
   selectImage.alt = event.target.files[0].name;
 });
 
-const generate_form = document.getElementById('generate-meme');
 generate_form.addEventListener('submit', (event) => {
   ctx.font = "40px serif";
   ctx.fillStyle = 'white';
@@ -50,10 +53,6 @@ generate_form.addEventListener('submit', (event) => {
 
   event.preventDefault();
 });
-
-const btn_group = document.getElementById('button-group').querySelectorAll('button');
-const clear_btn = btn_group[0];
-const read_btn = btn_group[1];
 
 clear_btn.addEventListener('click', () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -76,6 +75,7 @@ read_btn.addEventListener('click', (event) => {
   
   synth.speak(utterThis);
 });
+
 
 
 /**
@@ -141,7 +141,7 @@ function toggle_buttons(toggle) {
 
 function init_selection_dropdown() {
   voices = synth.getVoices();
-  
+
   for(let i = 0; i < voices.length; i++)
   {
     var option = document.createElement('option');
